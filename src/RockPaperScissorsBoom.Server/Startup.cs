@@ -62,6 +62,13 @@ namespace RockPaperScissorsBoom.Server
             app.UseAuthentication();
 
             app.UseMvc();
+
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                context.Database.Migrate();
+            }
+
         }
     }
 }
